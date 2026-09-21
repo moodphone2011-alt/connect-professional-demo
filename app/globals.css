@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/*
+ * CONNECT design tokens.
+ *
+ * Semantic colours are plain CSS variables so the dark theme can swap them in
+ * one place; `@theme` maps them onto Tailwind utilities (bg-surface, text-ink…).
+ * Everything ships with the app — no external fonts, no CDN, no network at runtime.
+ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --canvas: #f4f5f9;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --subtle: #f4f5f8;
+  --line: #e5e6ec;
+  --line-strong: #d5d7e0;
+  --ink: #14151b;
+  --ink-soft: #40424e;
+  --muted: #6f7183;
+  --sidebar: #101119;
+  --sidebar-line: #23252f;
+  --sidebar-ink: #e8e9f0;
+  --sidebar-muted: #8a8d9e;
+}
+
+.dark {
+  --canvas: #0b0c11;
+  --surface: #14151b;
+  --surface-raised: #191a22;
+  --subtle: #1b1d25;
+  --line: #262832;
+  --line-strong: #333644;
+  --ink: #f5f6fa;
+  --ink-soft: #d3d5e0;
+  --muted: #9295a6;
+  --sidebar: #0e0f15;
+  --sidebar-line: #21232d;
+  --sidebar-ink: #eceef4;
+  --sidebar-muted: #8c8fa1;
+}
+
+@theme {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-line: var(--sidebar-line);
+  --color-sidebar-ink: var(--sidebar-ink);
+  --color-sidebar-muted: var(--sidebar-muted);
+
+  --color-brand-50: #f1efff;
+  --color-brand-100: #e3dfff;
+  --color-brand-200: #c9c1ff;
+  --color-brand-300: #a99cfb;
+  --color-brand-400: #8b7bf3;
+  --color-brand-500: #6c5ce7;
+  --color-brand-600: #5a4bd0;
+  --color-brand-700: #4a3daf;
+  --color-brand-800: #3a308a;
+  --color-brand-900: #2b2467;
+
+  --color-teal-accent: #18c4c9;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", "Noto Sans Arabic", Arial, sans-serif;
+
+  --radius-card: 14px;
+
+  --shadow-soft: 0 1px 2px rgb(16 17 25 / 0.04), 0 6px 20px -12px rgb(16 17 25 / 0.18);
+  --shadow-lifted: 0 12px 40px -16px rgb(16 17 25 / 0.28);
+
+  --animate-rise: rise 0.22s ease-out;
+  --animate-fade: fade 0.16s ease-out;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* One focus treatment for the whole product. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-brand-500) 26%, transparent);
+  }
+}
+
+@layer components {
+  .focus-ring {
+    @apply outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500;
+  }
+
+  /* Restrained scrollbars, so dense panels do not look like a browser demo. */
+  .scroll-slim {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  .scroll-slim::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scroll-slim::-webkit-scrollbar-thumb {
+    background-color: var(--line-strong);
+    border-radius: 999px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
